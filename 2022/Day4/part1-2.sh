@@ -23,5 +23,5 @@ while IFS="-," read -ra input; do
 
 done < "$inputfile"
 
-echo "$counter"
-echo "$overlap"
+echo "The amount of assignment pairs where one range fully contains the other is: $counter"
+echo "The amount of assignment pairs where the ranges overlap is: $overlap"

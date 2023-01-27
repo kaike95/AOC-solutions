@@ -15,24 +15,21 @@ x=0
 win() {
 	score=$(( score + 6 + $1 ))
 	x=$((x+1))
-	echo -ne "$x : Win"\\r
 }
 
 draw() {
 	score=$(( score + 3 + $1 ))
 	x=$((x+1))
-	echo -ne "$x : Draw"\\r
 }
 
 lose() {
 	score=$(( score + $1 ))
 	x=$((x+1))
-	echo -ne "$x : Lose"\\r
 }
 
 while read -r input; do
-	enemy=$(cut -d " " -f1 <<< "$input")
-	player=$(cut -d " " -f2 <<< "$input")
+	enemy=${input::1}
+	player=${input:2}
 	case $enemy in
 		A)
 		case $player in
@@ -54,8 +51,14 @@ while read -r input; do
 			Y) lose 2 ;;
 			Z) draw 3 ;;
 		esac ;;
-	
 	esac
 done < "$inputfile"
 
 echo "The RPS tournament final score is: ${score}"
+
+[[ ! -f ./part2.sh ]] && exit
+read -rp "Do you want to run part2? (ANY/n): " question 
+case $question in 
+  [nN]) exit ;;
+  *   ) ./part2.sh "$1" ;;
+esac
